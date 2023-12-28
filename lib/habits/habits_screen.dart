@@ -56,6 +56,20 @@ class _HabitsScreenState extends State<HabitsScreen> {
             actions: <Widget>[
               IconButton(
                 icon: Icon(
+                  Icons.handshake_outlined,
+                  semanticLabel: S.of(context).statistics,
+                ),
+                color: Colors.grey[400],
+                tooltip: S.of(context).statistics,
+                onPressed: () {
+                  Provider.of<HabitsManager>(context, listen: false)
+                      .hideSnackBar();
+                  Provider.of<AppStateManager>(context, listen: false)
+                      .goPrayerHabit(true);
+                },
+              ),
+              IconButton(
+                icon: Icon(
                   Icons.bar_chart,
                   semanticLabel: S.of(context).statistics,
                 ),

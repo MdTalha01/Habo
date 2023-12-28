@@ -40,6 +40,7 @@ class Habit extends StatefulWidget {
       'sanction': habitData.sanction,
       'showSanction': habitData.showSanction ? 1 : 0,
       'accountant': habitData.accountant,
+      'type': habitData.type ?? '',
     };
   }
 
@@ -62,6 +63,7 @@ class Habit extends StatefulWidget {
       'sanction': habitData.sanction,
       'showSanction': habitData.showSanction ? 1 : 0,
       'accountant': habitData.accountant,
+      'type': habitData.type ?? '',
     };
   }
 
@@ -82,6 +84,7 @@ class Habit extends StatefulWidget {
           sanction: json['sanction'] ?? '',
           showSanction: (json['showSanction'] ?? 0) != 0 ? true : false,
           accountant: json['accountant'] ?? '',
+          type: json['type'] ?? '',
         );
 
   static SplayTreeMap<DateTime, List> doEvents(Map<String, dynamic> input) {
@@ -120,9 +123,10 @@ class HabitState extends State<Habit> {
   DateTime _selectedDay = DateTime.now();
 
   void refresh() {
-    setState(() {
-      _updateLastStreak();
-    });
+
+      setState(() {
+        _updateLastStreak();
+      });
   }
 
   @override
@@ -263,6 +267,7 @@ class HabitState extends State<Habit> {
               calendarBuilders: CalendarBuilders(
                 defaultBuilder: (context, date, _) {
                   return OneDayButton(
+                    type: widget.habitData.type,
                     callback: refresh,
                     parent: this,
                     id: widget.habitData.id!,
@@ -273,6 +278,7 @@ class HabitState extends State<Habit> {
                 },
                 todayBuilder: (context, date, _) {
                   return OneDayButton(
+                  type: widget.habitData.type,
                     callback: refresh,
                     parent: this,
                     id: widget.habitData.id!,
@@ -388,6 +394,7 @@ class HabitState extends State<Habit> {
   }
 
   _updateLastStreakNormal() {
+
     int inStreak = 0;
     var checkDayKey = widget.habitData.events.lastKey();
     var lastDayKey = widget.habitData.events.lastKey();

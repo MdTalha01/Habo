@@ -19,6 +19,7 @@ class HabitData {
     required this.sanction,
     required this.showSanction,
     required this.accountant,
+    this.type = '',
   });
 
   SplayTreeMap<DateTime, List> events;
@@ -37,4 +38,5 @@ class HabitData {
   String sanction;
   bool showSanction;
   String accountant;
+  String type;
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:habo/habits/edit_habit_screen.dart';
 import 'package:habo/habits/habits_manager.dart';
 import 'package:habo/habits/habits_screen.dart';
+import 'package:habo/habits/prayer_habit/paryer_habit_screen.dart';
 import 'package:habo/navigation/app_state_manager.dart';
 import 'package:habo/navigation/routes.dart';
 import 'package:habo/onboarding/onboarding_screen.dart';
@@ -53,6 +54,7 @@ class AppRouter extends RouterDelegate
         if (appStateManager.getEditHabit != null)
           EditHabitScreen.page(appStateManager.getEditHabit!),
         if (!allInitialized()) SplashScreen.page(),
+        if(appStateManager.getPrayerHabit) PrayerHabitsScreen.page(),
       ],
     );
   }
@@ -84,6 +86,10 @@ class AppRouter extends RouterDelegate
 
     if (route.settings.name == Routes.editHabitPath) {
       appStateManager.goEditHabit(null);
+    }
+
+    if (route.settings.name == Routes.prayerHabitPath) {
+      appStateManager.goPrayerHabit(false);
     }
 
     return false;

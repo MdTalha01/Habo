@@ -30,14 +30,15 @@ class HabitHeader extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(3, 0, 0, 0),
             child: Text(
-              Provider.of<HabitsManager>(context)
-                  .getNameOfHabit(widget.habitData.id!),
+              widget.habitData.title,
+              // Provider.of<HabitsManager>(context)
+              //     .getNameOfHabit(widget.habitData.id!),
               style: const TextStyle(fontSize: 20),
               overflow: TextOverflow.ellipsis,
             ),
           ),
         ),
-        IconButton(
+       if( widget.habitData.type.toLowerCase() == '') IconButton(
           padding: const EdgeInsets.fromLTRB(3, 0, 0, 0),
           constraints:
               const BoxConstraints(minHeight: 36, minWidth: 36, maxHeight: 48),

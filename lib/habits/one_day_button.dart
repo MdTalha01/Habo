@@ -19,7 +19,7 @@ class OneDayButton extends StatelessWidget {
       required this.id,
       required this.parent,
       required this.callback,
-      required this.event})
+      required this.event, required this.type})
       : date = transformDate(date);
 
   final int id;
@@ -29,6 +29,7 @@ class OneDayButton extends StatelessWidget {
   final HabitState parent;
   final void Function() callback;
   final List? event;
+  final String type;
 
   @override
   Widget build(BuildContext context) {
@@ -132,12 +133,18 @@ class OneDayButton extends StatelessWidget {
                     if (value.key == const Key('Check') ||
                         value.key == const Key('Fail') ||
                         value.key == const Key('Skip')) {
-                      Provider.of<HabitsManager>(context, listen: false)
-                          .addEvent(id, date, [
-                        DayType.values[icons
-                            .indexWhere((element) => element.key == value.key)],
-                        comment
-                      ]);
+                      if(type.toLowerCase() == 'prayer'){
+                        showToast(context, 'You add event to prayer',);
+                      }
+                      else
+                      {
+                        Provider.of<HabitsManager>(context, listen: false)
+                            .addEvent(id, date, [
+                          DayType.values[icons.indexWhere(
+                              (element) => element.key == value.key)],
+                          comment
+                        ]);
+                      }
                       parent.events[date] = [
                         DayType.values[icons
                             .indexWhere((element) => element.key == value.key)],
@@ -160,13 +167,23 @@ class OneDayButton extends StatelessWidget {
                       showCommentDialog(context, index, comment);
                     } else {
                       if (comment != '') {
-                        Provider.of<HabitsManager>(context, listen: false)
-                            .addEvent(id, date, [DayType.clear, comment]);
-                        parent.events[date] = [DayType.clear, comment];
+                        if(type == 'Prayer'){
+                          showToast(context, 'You add comment to prayer',);
+                        }
+                        else {
+                          Provider.of<HabitsManager>(context, listen: false)
+                              .addEvent(id, date, [DayType.clear, comment]);
+                        }
+                          parent.events[date] = [DayType.clear, comment];
                       } else {
-                        Provider.of<HabitsManager>(context, listen: false)
-                            .deleteEvent(id, date);
-                        parent.events.remove(date);
+                        if (type == 'Prayer') {
+                          showToast(context, 'You delete comment to prayer',);
+                        }
+                        else {
+                          Provider.of<HabitsManager>(context, listen: false)
+                              .deleteEvent(id, date);
+                        }
+                          parent.events.remove(date);
                       }
                     }
                     callback();
