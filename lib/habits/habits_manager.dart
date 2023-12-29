@@ -40,7 +40,6 @@ class HabitsManager extends ChangeNotifier {
   initModel() async {
     await _haboModel.initDatabase();
     allHabits = await _haboModel.getAllHabits();
-    prayerHabits = await _haboModel.getPrayerHabits();
     _isInitialized = true;
     notifyListeners();
   }

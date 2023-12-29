@@ -6,6 +6,7 @@ import 'package:habo/habits/habit.dart';
 import 'package:habo/habits/habits_manager.dart';
 import 'package:habo/habits/in_button.dart';
 import 'package:habo/helpers.dart';
+import 'package:habo/prayer_habit/firebase_habit_manager.dart';
 import 'package:habo/settings/settings_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -127,6 +128,7 @@ class OneDayButton extends StatelessWidget {
                 value: icons[index],
                 onTap: () {
                   parent.setSelectedDay(date);
+                  print(parent.widget.habitData.type);
                 },
                 onChanged: (value) {
                   if (value != null) {
@@ -135,6 +137,13 @@ class OneDayButton extends StatelessWidget {
                         value.key == const Key('Skip')) {
                       if(type.toLowerCase() == 'prayer'){
                         showToast(context, 'You add event to prayer',);
+                        Provider.of<FirebaseHabitManager>(context, listen: false)
+                            .addEvent(parent.widget.habitData.fId!, date, [
+                          DayType.values[icons.indexWhere(
+                                  (element) => element.key == value.key)],
+                          comment
+                        ]);
+
                       }
                       else
                       {
@@ -169,6 +178,8 @@ class OneDayButton extends StatelessWidget {
                       if (comment != '') {
                         if(type == 'Prayer'){
                           showToast(context, 'You add comment to prayer',);
+                          Provider.of<FirebaseHabitManager>(context, listen: false)
+                              .addEvent(parent.widget.habitData.fId!, date, [DayType.clear, comment]);
                         }
                         else {
                           Provider.of<HabitsManager>(context, listen: false)
@@ -178,6 +189,8 @@ class OneDayButton extends StatelessWidget {
                       } else {
                         if (type == 'Prayer') {
                           showToast(context, 'You delete comment to prayer',);
+                          Provider.of<FirebaseHabitManager>(context, listen: false)
+                              .deleteEvent(parent.widget.habitData.fId!, date);
                         }
                         else {
                           Provider.of<HabitsManager>(context, listen: false)

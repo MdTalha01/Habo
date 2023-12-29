@@ -1,5 +1,4 @@
 import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:habo/constants.dart';
 import 'package:habo/generated/l10n.dart';
@@ -41,6 +40,7 @@ class Habit extends StatefulWidget {
       'showSanction': habitData.showSanction ? 1 : 0,
       'accountant': habitData.accountant,
       'type': habitData.type ?? '',
+      'f_id': habitData.fId ?? '',
     };
   }
 
@@ -64,6 +64,7 @@ class Habit extends StatefulWidget {
       'showSanction': habitData.showSanction ? 1 : 0,
       'accountant': habitData.accountant,
       'type': habitData.type ?? '',
+      'f_id': habitData.fId ?? '',
     };
   }
 
@@ -85,6 +86,7 @@ class Habit extends StatefulWidget {
           showSanction: (json['showSanction'] ?? 0) != 0 ? true : false,
           accountant: json['accountant'] ?? '',
           type: json['type'] ?? '',
+          fId: json['f_id'] ?? '',
         );
 
   static SplayTreeMap<DateTime, List> doEvents(Map<String, dynamic> input) {

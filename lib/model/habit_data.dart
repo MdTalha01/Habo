@@ -21,6 +21,7 @@ class HabitData {
     required this.showSanction,
     required this.accountant,
     this.type = '',
+    this.fId,
   });
 
   SplayTreeMap<DateTime, List> events;
@@ -40,6 +41,7 @@ class HabitData {
   bool showSanction;
   String accountant;
   String type;
+  String? fId;
 
   Map<String, dynamic> toMap() {
     return {
@@ -62,9 +64,13 @@ class HabitData {
       'showSanction': showSanction,
       'accountant': accountant,
       'type': type,
+      'f_id': fId ?? '',
     };
   }
 
+  updateEvents(SplayTreeMap<DateTime, List> newEvents) {
+    events = newEvents;
+  }
    factory HabitData.fromMap(Map<String,dynamic> hab){
    return HabitData(
   id: hab['id'] ?? 0,
@@ -85,6 +91,7 @@ class HabitData {
   showSanction: (hab['showSanction'] ?? 0) == 0 ? false : true,
   accountant: hab['accountant'] ?? '',
   type: hab['type'] ?? '',
+  fId: hab['f_id'] ?? '',
   );
   }
 }

@@ -11,6 +11,7 @@ import 'package:habo/habits/habits_manager.dart';
 import 'package:habo/navigation/app_router.dart';
 import 'package:habo/navigation/app_state_manager.dart';
 import 'package:habo/notifications.dart';
+import 'package:habo/prayer_habit/firebase_habit_manager.dart';
 import 'package:habo/settings/settings_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:window_size/window_size.dart';
@@ -41,6 +42,7 @@ class _HaboState extends State<Habo> {
   final _appStateManager = AppStateManager();
   final _settingsManager = SettingsManager();
   final _habitManager = HabitsManager();
+  final _prayerManager = FirebaseHabitManager();
 
   late AppRouter _appRouter;
 
@@ -53,6 +55,8 @@ class _HaboState extends State<Habo> {
     _settingsManager.initialize();
     _habitManager.initialize();
     _authManager.initialize();
+    _prayerManager.initialize();
+
     if (platformSupportsNotifications()) {
       initializeNotifications();
     }
@@ -88,6 +92,9 @@ class _HaboState extends State<Habo> {
         ),
         ChangeNotifierProvider(
           create: (context) => _authManager,
+        ),
+        ChangeNotifierProvider(
+          create: (context) => _prayerManager,
         ),
       ],
       child: Consumer<SettingsManager>(builder: (context, counter, _) {

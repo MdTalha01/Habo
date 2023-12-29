@@ -3,6 +3,7 @@ import 'package:habo/habits/calendar_header.dart';
 import 'package:habo/habits/empty_list_image.dart';
 import 'package:habo/habits/habit.dart';
 import 'package:habo/habits/habits_manager.dart';
+import 'package:habo/prayer_habit/firebase_habit_manager.dart';
 import 'package:provider/provider.dart';
 
 class CalendarColumn extends StatelessWidget {
@@ -11,7 +12,7 @@ class CalendarColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Habit> calendars = isPrayer? Provider.of<HabitsManager>(context).getPrayerHabits  :   Provider.of<HabitsManager>(context).getAllHabits;
+    List<Habit> calendars = isPrayer? Provider.of<FirebaseHabitManager>(context).getPrayerHabits  :   Provider.of<HabitsManager>(context).getAllHabits;
     return Column(
       children: <Widget>[
         const Padding(
