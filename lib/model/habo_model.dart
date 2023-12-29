@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:collection';
 import 'dart:io';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:habo/constants.dart';
 import 'package:habo/habits/habit.dart';
@@ -15,6 +15,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart' as ffi;
 class HaboModel {
   static const _dbVersion = 3;
   late Database db;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> deleteEvent(int id, DateTime dateTime) async {
     try {
@@ -270,5 +271,22 @@ class HaboModel {
         print(_);
       }
     }
+  }
+
+  // FirebaseFirestore Database
+  Future<List<Habit>> getPrayerHabits() async {
+    List<Habit> result = [];
+     await _firestore
+          .collection('habits')
+          .doc('fajar')
+          .get()
+          .then((value) {
+              if(value.data() != null){
+                result.add(Habit(habitData: HabitData.fromMap(value.data()!)));
+              }
+          }
+    );
+    return result;
+
   }
 }

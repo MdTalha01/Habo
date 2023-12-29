@@ -6,12 +6,12 @@ import 'package:habo/habits/habits_manager.dart';
 import 'package:provider/provider.dart';
 
 class CalendarColumn extends StatelessWidget {
-  final List<Habit>? habits;
-  const CalendarColumn({super.key, this.habits});
+  final bool isPrayer;
+  const CalendarColumn({super.key, this.isPrayer = false,});
 
   @override
   Widget build(BuildContext context) {
-    List<Habit> calendars = habits  ??  Provider.of<HabitsManager>(context).getAllHabits;
+    List<Habit> calendars = isPrayer? Provider.of<HabitsManager>(context).getPrayerHabits  :   Provider.of<HabitsManager>(context).getAllHabits;
     return Column(
       children: <Widget>[
         const Padding(

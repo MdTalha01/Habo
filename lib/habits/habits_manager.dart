@@ -14,12 +14,14 @@ import 'package:habo/model/habo_model.dart';
 import 'package:habo/notifications.dart';
 import 'package:habo/statistics/statistics.dart';
 
+
 class HabitsManager extends ChangeNotifier {
   final HaboModel _haboModel = HaboModel();
   final GlobalKey<ScaffoldMessengerState> _scaffoldKey =
       GlobalKey<ScaffoldMessengerState>();
 
   late List<Habit> allHabits = [];
+  late List<Habit> prayerHabits = [];
   bool _isInitialized = false;
 
   Habit? deletedHabit;
@@ -38,6 +40,7 @@ class HabitsManager extends ChangeNotifier {
   initModel() async {
     await _haboModel.initDatabase();
     allHabits = await _haboModel.getAllHabits();
+    prayerHabits = await _haboModel.getPrayerHabits();
     _isInitialized = true;
     notifyListeners();
   }
@@ -139,6 +142,10 @@ class HabitsManager extends ChangeNotifier {
         backgroundColor: HaboColors.red,
       ),
     );
+  }
+
+  List<Habit> get getPrayerHabits {
+    return prayerHabits;
   }
 
   List<Habit> get getAllHabits {

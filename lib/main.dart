@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:habo/auth/auth_manager.dart';
 import 'package:habo/habits/habits_manager.dart';
 import 'package:habo/navigation/app_router.dart';
 import 'package:habo/navigation/app_state_manager.dart';
@@ -13,8 +15,14 @@ import 'package:habo/settings/settings_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:window_size/window_size.dart';
 import 'package:habo/generated/l10n.dart';
+import 'firebase_options.dart';
 
-void main() {
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   addLicenses();
   runApp(
     const Habo(),
@@ -29,9 +37,11 @@ class Habo extends StatefulWidget {
 }
 
 class _HaboState extends State<Habo> {
+  final _authManager = AuthManager();
   final _appStateManager = AppStateManager();
   final _settingsManager = SettingsManager();
   final _habitManager = HabitsManager();
+
   late AppRouter _appRouter;
 
   @override
@@ -42,6 +52,7 @@ class _HaboState extends State<Habo> {
     }
     _settingsManager.initialize();
     _habitManager.initialize();
+    _authManager.initialize();
     if (platformSupportsNotifications()) {
       initializeNotifications();
     }
@@ -74,6 +85,9 @@ class _HaboState extends State<Habo> {
         ),
         ChangeNotifierProvider(
           create: (context) => _habitManager,
+        ),
+        ChangeNotifierProvider(
+          create: (context) => _authManager,
         ),
       ],
       child: Consumer<SettingsManager>(builder: (context, counter, _) {

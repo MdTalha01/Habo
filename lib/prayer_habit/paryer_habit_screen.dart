@@ -36,26 +36,7 @@ class _PrayerHabitsScreenState extends State<PrayerHabitsScreen> {
 
       ),
       body: CalendarColumn(
-        habits: [
-          Habit(habitData:HabitData(
-            id: 1,
-            position: 0,
-            title: 'Fajar',
-            twoDayRule: false,
-            cue: 'Alarm',
-            reward: 'Reward',
-            sanction: 'Sanction',
-            showReward: true,
-            accountant: "",
-            advanced: false,
-            events: SplayTreeMap<DateTime, List>(),
-            notification: true,
-            notTime: const TimeOfDay(hour: 0, minute: 1),
-            routine: 'Routine',
-            showSanction: true,
-            type: 'Prayer',
-          )),
-        ],
+        isPrayer: true,
       ),
 
     );

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:habo/constants.dart';
 import 'package:habo/generated/l10n.dart';
 import 'package:habo/habits/habit.dart';
-import 'package:habo/habits/habits_manager.dart';
-import 'package:provider/provider.dart';
 
 class HabitHeader extends StatelessWidget {
   const HabitHeader({
@@ -38,7 +36,7 @@ class HabitHeader extends StatelessWidget {
             ),
           ),
         ),
-       if( widget.habitData.type.toLowerCase() == '') IconButton(
+       if( widget.habitData.type.isEmpty) IconButton(
           padding: const EdgeInsets.fromLTRB(3, 0, 0, 0),
           constraints:
               const BoxConstraints(minHeight: 36, minWidth: 36, maxHeight: 48),
